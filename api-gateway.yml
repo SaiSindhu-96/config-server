@@ -1,6 +1,16 @@
 server:
   port: 8080
- 
+
 spring:
-  application:
-    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
+
+        - id: main-service
+          uri: lb://MAIN-SERVICE
+          predicates:
+            - Path=/api/**
